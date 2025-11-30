@@ -1,13 +1,8 @@
 from google.adk.agents.llm_agent import Agent
 from google.adk.agents.sequential_agent import SequentialAgent
 from google.adk.models import Gemini
-from .image_preprocessing_agent import ImagePreprocessingAgent
+from image_preprocessing_agent import ImagePreprocessingAgent
 from google.genai import types
-
-# data_agent should be a sequential agent that:
-# 1 does data preprocessing it is just a deterministic step not an agentic function
-
-# entity extraction
 
 
 
@@ -102,3 +97,11 @@ data_input_pipeline_agent = SequentialAgent(
     description="Executes a sequence of code writing, reviewing, and refactoring.",
     # The agents will run in the order provided: Writer -> Reviewer -> Refactorer
 )
+
+async def extract_entities(image):
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=[entity_prompt, image]
+    )
+
+    return response
