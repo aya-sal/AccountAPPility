@@ -254,38 +254,6 @@ class GraphRag:
 
         return merged_results
 
-    # LangChain-compatible retriever
-    class LangChainRetriever:
-        """Simple adapter to present GraphRag's vector search as a LangChain retriever."""
-        def __init__(self, graph_rag_instance: "GraphRag", k: int = 5):
-            self.gr = graph_rag_instance
-            self.k = k
-
-        def get_relevant_documents(self, query: str):
-            """Return LangChain Document instances or simple dicts if Document is unavailable."""
-            hits = self.gr.search_similar(query, top_k=self.k)
-            docs = []
-            for h in hits:
-                node = h["node"]
-                score = h["score"]
-                # Build a content string
-                content = ""
-                if isinstance(node, dict):
-                    # Use embedding_text if present else build a readable fallback
-                    content = node.get("embedding_text") or " | ".join([f"{k}: {v}" for k, v in node.items()])
-                    metadata = {k: v for k, v in node.items() if k not in ["embedding", "embedding_text"]}
-                else:
-                    content = str(node)
-                    metadata = {}
-
-                metadata["score"] = score
-
-                if Document:
-                    docs.append(Document(page_content=content, metadata=metadata))
-                else:
-                    docs.append({"page_content": content, "metadata": metadata})
-            return docs
-
     # Query router (heuristic + DB check)
     def route_query(self, query: str, vector_k: int = 5, neighbor_expand: int = 2):
         """
