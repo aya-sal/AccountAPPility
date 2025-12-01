@@ -92,26 +92,6 @@ python3 -m venv venv source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-> **Your `requirements.txt` should include:**
->
-> * `google-genai`
->
-> * `google-adk`
->
-> * `transformers`
->
-> * `torch`
->
-> * `datasets`
->
-> * `Pillow`
->
-> * `python-dotenv`
->
-> * `neo4j`
->
-> * `langchain-neo4j`
-
 ### Environment Variables
 
 Create a file named `.env`:
@@ -129,10 +109,9 @@ NEO4J_DATABASE=neo4j
 /project 
 │ 
 ├── data_input_agent.py 
-├── image_preprocessing_agent.py 
 ├── graph_rag.py 
 ├── embeddings.py 
-├── notebook.ipynb 
+├── full_run.ipynb 
 ├── README.md 
 └── .env
 ```
@@ -140,36 +119,6 @@ NEO4J_DATABASE=neo4j
 ## Core Modules
 
 Below is a description of the core Python modules included in the system.
-
-### `data_input_agent.py`
-
-Implements:
-
-* A `data_input_agent` (asks the user for a receipt)
-
-* `entity_agent` (extracts entities + relationships)
-
-* A `SequentialAgent` pipeline combining:
-
-  * Data prompt
-
-  * Image preprocessing
-
-  * Entity extraction
-
-**Key components:**
-
-* `data_agent` - prompts for image
-
-* `image_preprocessing_agent` - optional preprocessing
-
-* `entity_agent` - Gemini-based structured extraction
-
-* `data_input_pipeline_agent` - runs the three steps in sequence
-
-Also includes:
-
-* `entity_prompt` - JSON schema enforced output format
 
 ### `embeddings.py`
 

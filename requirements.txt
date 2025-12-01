@@ -1,0 +1,9 @@
+google-genai
+google-adk
+transformers
+torch
+datasets
+Pillow
+python-dotenv
+neo4j
+langchain-neo4j
